@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var caTax = 0.0975;
+            var nyTax = 8.875;
+            var book = 17.99;
+            var chips = 3.99;
+            var pencils = 2.99;
+            var shirt = 29.99;
+
+            $("#print").click(function () {
+                var qty1 = $("#qty1").val()
+                var qty2 = $("#qty2").val()
+                if (!qty1 || !qty2) {
+                    alert('please select qty');
+                    return
+                }
+                var tax = 0;
+                var item1 = $('#sel2 option:selected').text();
+                var item2 = $('#sel3 option:selected').text();
+                var item1Val = $('#sel2').val();
+                var item2Val = $('#sel3').val();
+                var subtotal = qty1 * item1Val + item2Val * qty2
+                var total = 0
+                console.log('qty1', [qty1 * item1Val, item2]);
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                Location
+            </div>
+            <div class="col-8">
+                <div class="form-group">
+                    <select class="form-control" id="sel1">
+                        <option>California</option>
+                        <option>New York</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                Item 1
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <select class="form-control" id="sel2">
+                        <option value="17.99">book</option>
+                        <option value="3.99">potato chips</option>
+                        <option value="2.99">pencils</option>
+                        <option value="29.99">shirt</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <input type="number" class="form-control" id="qty1">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                Item 2
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <select class="form-control" id="sel3">
+                        <option value="17.99">book</option>
+                        <option value="3.99">potato chips</option>
+                        <option value="2.99">pencils</option>
+                        <option value="29.99">shirt</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <input type="number" class="form-control" id="qty2">
+                </div>
+            </div>
+        </div>
+        <button id="print" type="button" class="btn btn-primary">
+            Print
+        </button>
+    </div>
+
+
+</body>
+
+</html>
