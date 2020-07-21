@@ -10,12 +10,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function () {
-            var caTax = 0.0975;
-            var nyTax = 8.875;
-            var book = 17.99;
-            var chips = 3.99;
-            var pencils = 2.99;
-            var shirt = 29.99;
 
             $("#print").click(function () {
                 var qty1 = $("#qty1").val()
@@ -24,14 +18,63 @@
                     alert('please select qty');
                     return
                 }
-                var tax = 0;
+                var tax1 = 0;
+                var tax2 = 0
                 var item1 = $('#sel2 option:selected').text();
                 var item2 = $('#sel3 option:selected').text();
                 var item1Val = $('#sel2').val();
                 var item2Val = $('#sel3').val();
-                var subtotal = qty1 * item1Val + item2Val * qty2
-                var total = 0
-                console.log('qty1', [qty1 * item1Val, item2]);
+                var item1Total = qty1 * item1Val
+                var item2Total = qty2 * item2Val
+                var subtotal = (item1Total + item2Total).toFixed(2)
+                var rate = $('#sel1').val()
+                if (item1 === 'book' || item1 === 'pencils') {
+                    tax1 = item1Total * rate
+                }
+                if (item2 === 'book' || item2 === 'pencils') {
+                    tax2 = item2Total * rate
+                }
+                var tax = (Math.ceil((tax1 + tax2) * 20) / 20).toFixed(2)
+                var total = (parseFloat(subtotal) + parseFloat(tax)).toFixed(2)
+                console.log('qty1', [tax, total, subtotal]);
+                var table = ` <table class="table">
+            <thead>
+              <tr>
+                <th>item</th>
+                <th>price</th>
+                <th>qty</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>${item1}</td>
+                <td>$${item1Val}</td>
+                <td>${qty1}</td>
+              </tr>
+              <tr>
+                <td>${item2}</td>
+                <td>$${item2Val}</td>
+                <td>${qty2}</td>
+              </tr>
+              <tr>
+                <td>subtotal:</td>
+                <td></td>
+                <td>$${subtotal}</td>
+              </tr>
+              <tr>
+                <td>tax:</td>
+                <td></td>
+                <td>$${tax}</td>
+              </tr>
+              <tr>
+                <td>total:</td>
+                <td></td>
+                <td>$${total}</td>
+              </tr>
+            </tbody>
+          </table>`
+                $("#table-div").empty();
+                $("#table-div").append(table);
             });
 
         });
@@ -48,8 +91,8 @@
             <div class="col-8">
                 <div class="form-group">
                     <select class="form-control" id="sel1">
-                        <option>California</option>
-                        <option>New York</option>
+                        <option value="0.0975">California</option>
+                        <option value="0.08875">New York</option>
                     </select>
                 </div>
             </div>
@@ -97,6 +140,7 @@
         <button id="print" type="button" class="btn btn-primary">
             Print
         </button>
+        <div id="table-div"></div>
     </div>
 
 
